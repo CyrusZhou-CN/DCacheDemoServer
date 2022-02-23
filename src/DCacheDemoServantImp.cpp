@@ -1,6 +1,6 @@
 ﻿#include "DCacheDemoServantImp.h"
 #include "servant/Application.h"
-
+#include "DCacheDemoServer.h"
 using namespace std;
 
 //////////////////////////////////////////////////////
@@ -21,9 +21,9 @@ int DCacheDemoServantImp::test(tars::TarsCurrentPtr current)
 {
     TLOGDEBUG("[DCacheDemoServantImp::test]"
               << "current:" << current << endl);
-    CacheDemoServer cacheDemoServer;
+    DCacheDemoServer dcacheDemoServer;
     string result{};
-    cacheDemoServer.test("test", "", result);
+    dcacheDemoServer.test("test", "", result);
     TLOGDEBUG("[DCacheDemoServantImp::test]"
               << "result:" << result << endl);
 
@@ -33,9 +33,9 @@ int DCacheDemoServantImp::SetKV(const string& kv_key,const string& kv_value, tar
 {    
     TLOGDEBUG("[DCacheDemoServantImp::SetKV]"
               << "current:" << current << endl);
-    CacheDemoServer cacheDemoServer;
+    DCacheDemoServer dcacheDemoServer;
     string result{};
-    cacheDemoServer.SetKV("setkv", kv_key + ":" + kv_value, result);
+    dcacheDemoServer.SetKV("setkv", kv_key + ":" + kv_value, result);
     TLOGDEBUG("[DCacheDemoServantImp::SetKV]"
               << "result:" << result << endl);
 

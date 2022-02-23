@@ -6,6 +6,10 @@
 
 using namespace tars;
 
+#include "servant/Communicator.h"
+#include "Proxy.h"
+using namespace DCache;
+
 /**
  *
  **/

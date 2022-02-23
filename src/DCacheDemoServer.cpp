@@ -8,6 +8,7 @@ Communicator comm;
 ProxyPrx prx;
 string locator = "tars.tarsregistry.QueryObj@tcp -h 7.1.0.3 -p 17890"; // 更换为实际地址
 string module_name="";
+string app_name="";
 /////////////////////////////////////////////////////////////////
 void
 DCacheDemoServer::initialize()
@@ -16,12 +17,14 @@ DCacheDemoServer::initialize()
     //...
 
     addServant<DCacheDemoServantImp>(ServerConfig::Application + "." + ServerConfig::ServerName + ".DCacheDemoServantObj");
-    addConfig("CacheDemo.conf");
-
+    
+    addConfig("DCacheDemoServer.conf");
+    
     TC_Config conf;
-    conf.parseFile(ServerConfig::BasePath + "CacheDemo.conf");
+    conf.parseFile(ServerConfig::BasePath + "DCacheDemoServer.conf");
     TLOG_DEBUG("KValueModuleName:"<< conf.get("/root<KValueModuleName>") << endl);
     module_name = conf.get("/root<KValueModuleName>");
+    app_name = conf.get("/root<AppName>");
 
     TARS_ADD_ADMIN_CMD_NORMAL("help", DCacheDemoServer::help);
     TARS_ADD_ADMIN_CMD_NORMAL("test", DCacheDemoServer::test);
@@ -30,7 +33,7 @@ DCacheDemoServer::initialize()
     TARS_ADD_ADMIN_CMD_NORMAL("listkv", DCacheDemoServer::ListKV);
 
     comm.setProperty("locator", locator);
-    comm.stringToProxy("DCache.TestProxyServer.ProxyObj", prx); // 更换为实际的proxy servant
+    comm.stringToProxy("DCache."+ app_name +"ProxyServer.ProxyObj", prx); // 更换为实际的proxy servant
 }
 /////////////////////////////////////////////////////////////////
 void
@@ -71,7 +74,6 @@ bool DCacheDemoServer::SetKV(const string &command, const string &params, string
 }
 bool DCacheDemoServer::GetKV(const string &command, const string &params, string &result)
 {
-    const string module_name = "TestKValue";
     TLOGDEBUG("[DCacheDemoServer::GetKV]"
               << "module_name:" << module_name << "command:" << command << "params:" << params << endl);
     // 读数据

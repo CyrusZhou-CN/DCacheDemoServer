@@ -3,6 +3,7 @@
  应用配置CacheDemo.conf 用来配置 DCache 模块名 
  ```
 <root>
+AppName=Test
 KValueModuleName=TestKv22
 </root>
  ```
