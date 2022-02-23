@@ -1,0 +1,14 @@
+
+module DCacheDemo
+{
+
+interface DCacheDemoServant
+{
+    int test();
+    int SetKV(string kv_key, string kv_value);
+    int GetKV(string kv_key);
+    int DelKV(string kv_key);
+    int ListKV();
+};
+
+}; 
