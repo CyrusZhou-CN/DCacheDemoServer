@@ -42,15 +42,37 @@ int DCacheDemoServantImp::SetKV(const string& kv_key,const string& kv_value, tar
     return 0;
 }
 int DCacheDemoServantImp::GetKV(const string& kv_key, tars::TarsCurrentPtr current)
-{
+{    
+    TLOGDEBUG("[DCacheDemoServantImp::GetKV]"
+              << "current:" << current << endl);
+    DCacheDemoServer dcacheDemoServer;
+    string result{};
+    dcacheDemoServer.GetKV("getkv", kv_key, result);
+    TLOGDEBUG("[DCacheDemoServantImp::GetKV]"
+              << "result:" << result << endl);
+
     return 0;
 }
 int DCacheDemoServantImp::DelKV(const string& kv_key, tars::TarsCurrentPtr current)
 {
+    TLOGDEBUG("[DCacheDemoServantImp::DelKV]"
+              << "current:" << current << endl);
+    DCacheDemoServer dcacheDemoServer;
+    string result{};
+    dcacheDemoServer.DelKV("delkv", kv_key, result);
+    TLOGDEBUG("[DCacheDemoServantImp::DelKV]"
+              << "result:" << result << endl);
     return 0;
 }
 int DCacheDemoServantImp::ListKV(tars::TarsCurrentPtr current)
 {
+    TLOGDEBUG("[DCacheDemoServantImp::ListKV]"
+              << "current:" << current << endl);
+    DCacheDemoServer dcacheDemoServer;
+    string result{};
+    dcacheDemoServer.ListKV("listkv", "", result);
+    TLOGDEBUG("[DCacheDemoServantImp::ListKV]"
+              << "result:" << result << endl);
     return 0;
 }
 

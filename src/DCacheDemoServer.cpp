@@ -29,7 +29,8 @@ DCacheDemoServer::initialize()
     TARS_ADD_ADMIN_CMD_NORMAL("help", DCacheDemoServer::help);
     TARS_ADD_ADMIN_CMD_NORMAL("test", DCacheDemoServer::test);
     TARS_ADD_ADMIN_CMD_NORMAL("setkv", DCacheDemoServer::SetKV);
-    TARS_ADD_ADMIN_CMD_NORMAL("getkv", DCacheDemoServer::GetKV);
+    TARS_ADD_ADMIN_CMD_NORMAL("getkv", DCacheDemoServer::GetKV);    
+    TARS_ADD_ADMIN_CMD_NORMAL("delkv", DCacheDemoServer::DelKV);
     TARS_ADD_ADMIN_CMD_NORMAL("listkv", DCacheDemoServer::ListKV);
 
     comm.setProperty("locator", locator);
@@ -47,7 +48,7 @@ DCacheDemoServer::destroyApp()
 bool DCacheDemoServer::SetKV(const string &command, const string &params, string &result)
 {
     TLOGDEBUG("[DCacheDemoServer::SetKV]"
-              << "module_name:" << module_name << "command:" << command << "params:" << params << endl);
+              << "module_name:" << module_name << ";command:" << command << ";params:" << params << endl);
     size_t d = params.find(":");
     string key = params.substr(0, d);
     string value = params.substr(d, params.length());
@@ -75,7 +76,7 @@ bool DCacheDemoServer::SetKV(const string &command, const string &params, string
 bool DCacheDemoServer::GetKV(const string &command, const string &params, string &result)
 {
     TLOGDEBUG("[DCacheDemoServer::GetKV]"
-              << "module_name:" << module_name << "command:" << command << "params:" << params << endl);
+              << "module_name:" << module_name << ";command:" << command << ";params:" << params << endl);
     // 读数据
     GetKVReq getreq;
     getreq.moduleName = module_name;
@@ -99,7 +100,7 @@ bool DCacheDemoServer::GetKV(const string &command, const string &params, string
 bool DCacheDemoServer::DelKV(const string &command, const string &params, string &result)
 {
     TLOGDEBUG("[DCacheDemoServer::DelKV]"
-              << "module_name:" << module_name << "command:" << command << "params:" << params << endl);
+              << "module_name:" << module_name << ";command:" << command << ";params:" << params << endl);
     // 删除数据
     try
     {
@@ -128,7 +129,7 @@ bool DCacheDemoServer::DelKV(const string &command, const string &params, string
 bool DCacheDemoServer::ListKV(const string &command, const string &params, string &result)
 {
     TLOGDEBUG("[DCacheDemoServer::ListKV]"
-              << "module_name:" << module_name << "command:" << command << "params:" << params << endl);
+              << "module_name:" << module_name << ";command:" << command << ";params:" << params << endl);
     // 获取所有key
     GetAllKeysReq getAllKeysReq;
     getAllKeysReq.moduleName = module_name;
@@ -137,6 +138,7 @@ bool DCacheDemoServer::ListKV(const string &command, const string &params, strin
     getAllKeysReq.idcSpecified = "Test";
     GetAllKeysRsp getAllKeysRsp;
     auto ret = prx->getAllKeys(getAllKeysReq, getAllKeysRsp);
+
     if (ret != ET_SUCC)
     {
         result += "获取前1000 key出错 |" + ret;
@@ -155,9 +157,7 @@ bool DCacheDemoServer::ListKV(const string &command, const string &params, strin
 bool DCacheDemoServer::test(const string &command, const string &params, string &result)
 {
     TLOGDEBUG("[DCacheDemoServer::test]"
-              << "command:" << command << "params:" << params << endl);
-    TLOGDEBUG("[DCacheDemoServer::test]"
-              << "module_name:" << module_name << endl);
+              << "module_name:" << module_name << ";command:" << command << ";params:" << params << endl);
 
     // 写数据
     SetKVReq setreq;
